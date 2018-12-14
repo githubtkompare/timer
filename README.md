@@ -1,5 +1,5 @@
 # timer
-https://tkompare-timer.firebaseapp.com/
+https://timer.kompare.us/
 
 I need a simple timer for the web. The ones out there don't fit the bill.
 
