@@ -1,4 +1,4 @@
-var Timer = {
+let Timer = {
 	displayTime: null,
 	additionalTime: 10,
 	theFuture: null,
@@ -30,47 +30,59 @@ var Timer = {
 			Timer.minutes = Math.floor((Timer.distance % (1000 * 60 * 60)) / (1000 * 60));
 			Timer.seconds = Math.floor((Timer.distance % (1000 * 60)) / 1000);
 
-			// Display the result in the element with id="demo"
+			// Calculate and Display the timer value.
 			Timer.displayTime = '';
 			if (Timer.hours > 0) {
-				if (Timer.hours < 10) {
-					Timer.displayTime += '0';
-				}
-				Timer.displayTime += Timer.hours + ":";
-			}
-			if (Timer.minutes > 0) {
-				if (Timer.minutes < 10) {
-					Timer.displayTime += '0';
-				}
-				Timer.displayTime += Timer.minutes + ":";
-			} else if (Timer.hours > 0) {
-				Timer.displayTime += '00:'
-			}
-			if (Timer.seconds > 0) {
-				if (Timer.seconds < 10) {
-					Timer.displayTime += '0';
-				}
-				Timer.displayTime += Timer.seconds;
+				Timer.displayTime += Timer.hours + "h " + Timer.minutes + "m";
 			} else {
-				Timer.displayTime += '00'
-			}
-			if (Timer.hours === 0 && Timer.minutes === 0) {
-				$('body').addClass('background-blue');
-			}
-			document.getElementById("time").innerHTML = Timer.displayTime;
+				// Less than 1 hour
+				if (Timer.minutes > 0) {
+					Timer.displayTime += Timer.minutes;
+				}
+				if (Timer.minutes < 10) {
+					if (Timer.minutes > 0) {
+						Timer.displayTime += ':';
+					}
+					if (Timer.seconds > 0) {
+						if (Timer.seconds < 10) {
+							Timer.displayTime += '0';
+						}
+						Timer.displayTime += Timer.seconds;
+					} else {
+						Timer.displayTime += '00';
+					}
+				} else {
+					Timer.displayTime += 'm';
+				}
 
+			}
+			// Background Color Rules
+			if (Timer.hours === 0) {
+				if (Timer.minutes < 2) {
+					$('body').removeClass('background-blue').addClass('background-violet');
+				} else if (Timer.minutes < 5) {
+					$('body').addClass('background-blue');
+				}
+			}
+			$('#time').html(Timer.displayTime);
+			//document.getElementById("time").innerHTML = Timer.displayTime;
 			// If the count down is finished, write some text
 			if (Timer.distance < 0) {
 				clearInterval(Timer.i);
-				document.getElementById("time").innerHTML = "END";
-
-				$('body').removeClass('background-blue').addClass('background-red');
+				$('#time').html('END');
+				//document.getElementById("time").innerHTML = "END";
+				$('body').removeClass('background-violet').addClass('background-red');
 			}
 		}, 1000);
 	},
+	/**
+	 *
+	 * @constructor
+	 */
 	Constructor: function() {
 		$('#button-start').click(function() {
 			$('body').removeClass('background-red').removeClass('background-blue');
+			$('header').removeClass('mb-auto');
 			Timer.Countdown();
 		});
 		$('#minutes').html(Timer.additionalTime);
