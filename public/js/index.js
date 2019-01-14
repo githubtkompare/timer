@@ -65,12 +65,12 @@ let Timer = {
 				}
 			}
 			$('#time').html(Timer.displayTime);
-			//document.getElementById("time").innerHTML = Timer.displayTime;
+			$('title').text('Timer - '+Timer.displayTime);
 			// If the count down is finished, write some text
 			if (Timer.distance < 0) {
 				clearInterval(Timer.i);
 				$('#time').html('END');
-				//document.getElementById("time").innerHTML = "END";
+				$('title').text('Timer - END');
 				$('body').removeClass('background-violet').addClass('background-red');
 			}
 		}, 1000);
